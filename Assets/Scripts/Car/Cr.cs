@@ -11,6 +11,7 @@ public class Cr : Controller
         GameManager.instance.Cars.Add(this);
         if(GameManager.instance.Boxes.Count > 0)
         {
+            TrackCenter();
             TrackStorage();
             Track(GameManager.instance.Boxes[0]);
         }
@@ -26,6 +27,7 @@ public class Cr : Controller
                 if (BX != null)
                 {
                     BX.SELL();
+                    HaveBox = false;
                     audioSource.PlayOneShot(GameManager.instance.CarGetAndThrowItem);
                     TrackStorage();
                 }
@@ -47,9 +49,11 @@ public class Cr : Controller
                         if(BG != null)
                         {
                             BG.HaveGenBox = false;
+                            BG.StartCoroutine(BG.GenBehave());
                         }
                         GameManager.instance.Boxes.Remove(box.transform.position);
                         box.Holded = true;
+                        HaveBox = true;
                         BH.GetBox(collision.gameObject);
                         audioSource.PlayOneShot(GameManager.instance.CarGetAndThrowItem);
                         TrackSell();
@@ -63,8 +67,7 @@ public class Cr : Controller
             if (Random.Range(0, 4*GameManager.instance.Cars.Count) == 0)
             {
                 audioSource.PlayOneShot(GameManager.instance.CarBr);
-                GameManager.instance.audioSource.clip = GameManager.instance.CarBr;
-                GameManager.instance.audioSource.PlayDelayed(0.3f);
+                
             }
         }
     }

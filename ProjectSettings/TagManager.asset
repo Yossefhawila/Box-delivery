@@ -7,6 +7,9 @@ TagManager:
   - sell
   - box
   - collider2
+  - StoragePlace
+  - SellPlace
+  - CenterPlace
   layers:
   - Default
   - TransparentFX

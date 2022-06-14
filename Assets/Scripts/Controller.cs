@@ -15,6 +15,9 @@ public abstract class Controller : MonoBehaviour
 
     public float speedInGame;
 
+    //car
+    public bool HaveBox;
+
     protected virtual void move(float Horizontal,float Vertical, float speed)
     {
         animator.SetFloat("Vertical",Vertical);
@@ -41,7 +44,15 @@ public abstract class Controller : MonoBehaviour
 
     public void TrackStorage()
     {
-        Track(new Vector2(-21.4f, -0.8f));
+        if (!HaveBox)
+        {
+            TrackCenter();
+            Track(GameManager.instance.StoragePlace);
+        }
+        else
+        {
+            Track(GameManager.instance.StoragePlace);
+        }
     }
     public void CancelCurrentTrack()
     {
@@ -53,19 +64,14 @@ public abstract class Controller : MonoBehaviour
     }
     public void TrackCenter()
     {
-        Track(new Vector2(0.4f, -0.8f));
+        
+        Track(GameManager.instance.CenterPlace);
     }
     public void TrackSell()
     {
-        if (transform.position.y >-0.9f&&transform.position.y<-0.7f)
-        {
-            Track(new Vector2(21.1f, -0.8f));
-        }
-        else
-        {
-            TrackStorage();
-            Track(new Vector2(21.1f, -0.8f));
-        }
+        TrackStorage();
+        TrackCenter();
+        Track(GameManager.instance.SellPlace);
     }
   
     public  void Track(Vector2 pos)

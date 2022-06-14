@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Box : MonoBehaviour
 {
+    [HideInInspector]
     public float price;
+    [HideInInspector]
     public bool Holded;   
  
     public void SELL()
@@ -14,8 +16,10 @@ public class Box : MonoBehaviour
         {
             BH.HaveBox = false;
         }
-        GameManager.instance.PlayerCoins += price;
+        GameManager.instance.PlayerCoins += price+GameManager.instance.InGameMoneyPerBox;
         GameManager.instance.UpdateWhatHappen();
+        GameObject opjP = Instantiate(GameManager.instance.Moneyp);
+        Destroy(opjP,3);
         Destroy(gameObject);
     }
 }
