@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     public AudioClip CarBr;
     public AudioClip CarGetAndThrowItem;
     public AudioClip BackGroundSound;
+    public AudioClip BoxSpawn;
 
     [SerializeField ]
     private Button CancelBuyButton;
@@ -57,9 +59,27 @@ public class GameManager : MonoBehaviour
 
 
     }
+    public void LoadSceneWithBuildIndex(int BuildINDEX)
+    {
+        SceneManager.LoadScene(BuildINDEX);
+    }
+    public void ReloadSence()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     private void Start()
     {
+        SetTimeScale(0);
         UpdateWhatHappen();
+    }
+    public void SetTimeScale(float Scale = 1) 
+    {
+        Time.timeScale = Scale;
     }
     public void AskForACar(Vector2 Pos)
     {
@@ -89,7 +109,7 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerCoins >= 100)
         {
-            Instantiate(ThCar, new Vector3(0.3f, -0.8f, -3), Quaternion.identity);
+            Instantiate(ThCar, new Vector3(0.3f, -0.8f, -6), Quaternion.identity);
             PlayerCoins -= 100;
             UpdateWhatHappen();
             audioSource.PlayOneShot(CarSound);

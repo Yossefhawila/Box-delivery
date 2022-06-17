@@ -7,6 +7,10 @@ public class Cr : Controller
     float step;
     private void Start()
     {
+        if(Tasks.Count > 0)
+        {
+            Track(transform.position);
+        }
     
         GameManager.instance.Cars.Add(this);
         if(GameManager.instance.Boxes.Count > 0)

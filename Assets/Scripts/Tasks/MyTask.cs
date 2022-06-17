@@ -7,7 +7,8 @@ public abstract class MyTask : MonoBehaviour
 {
     [SerializeField]
     protected GameObject Tick;
-
+    [SerializeField]
+    protected float DiamondAmount=5;
     public abstract bool GetTaskStatus();
     public virtual void SetTick(bool show=false)
     {

@@ -14,7 +14,6 @@ public class BoxGen : MonoBehaviour
 
     private Image Banel;
     private Text SecsText;
-    [HideInInspector]
     public bool HaveGenBox;
     
     private void Start()
@@ -34,12 +33,8 @@ public class BoxGen : MonoBehaviour
         {
             StartCoroutine(TextSecLoop(waitTime));
         }
-        yield return new WaitForSeconds(((GameManager.instance.SecToOfGen+GenSpeed+GameManager.instance.InGameSpeedOfGen)<=0.5)? 0.5f: (GameManager.instance.SecToOfGen + GenSpeed + GameManager.instance.InGameSpeedOfGen));
-        if (!HaveGenBox)
-        {
-         
-            GenBox();
-        }
+        yield return new WaitForSeconds(0);
+      
         
 
     }
@@ -56,6 +51,8 @@ public class BoxGen : MonoBehaviour
             yield return new WaitForSeconds(1);
             time -= 1;
         }
+        time = 0;
+        GenBox();
         Banel.enabled = false;
         SecsText.enabled = false;
     }
@@ -66,6 +63,7 @@ public class BoxGen : MonoBehaviour
         BOX.GetComponent<Box>().price = price;
         Box.transform.localPosition = new Vector3(0, 0, -5);
         GameManager.instance.Boxes.Add(transform.position);
+        GameManager.instance.audioSource.PlayOneShot(GameManager.instance.BoxSpawn,0.5f);
         HaveGenBox = true;
         AskAcar();
         

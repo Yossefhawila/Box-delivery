@@ -131,7 +131,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9009771121140313328}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: -0.8, z: 6}
+  m_LocalPosition: {x: 0.4, y: -0.8, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9009771120935138443}
@@ -206,6 +206,8 @@ MonoBehaviour:
   ViSpeed: 5
   Tasks: []
   CarSound: {fileID: 8300000, guid: 2d4a8d45fbda47744a3a4789565d81f3, type: 3}
+  speedInGame: 0
+  HaveBox: 0
 --- !u!50 &9009771121140313332
 Rigidbody2D:
   serializedVersion: 4
