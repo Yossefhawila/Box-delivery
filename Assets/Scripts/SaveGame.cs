@@ -2,25 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class SaveGame : MonoBehaviour
 {
     public int IndexOfSaveGame;
     public Text TextOfSaveGame;
     public Image PlusImage;
     public string SaveId;
+    private string PlayerName;
     public static SaveGame CurrentSaveGame;
     public Button button;
 
-    public void GetSaveData(int index)
+    private void Awake()
     {
-        string SaveId = PlayerPrefs.GetString("save"+index);
-        if (!string.IsNullOrEmpty(SaveId))
+        GetSaveData();
+    }
+    private void Start()
+    {
+        GetLastSelected();   
+    }
+    public void GetSaveData()
+    {
+        PlayerName = PlayerPrefs.GetString("Save"+IndexOfSaveGame);
+        if (!string.IsNullOrEmpty(PlayerName))
         {
-            MainGameManager.instance.SaveId = SaveId;
-            TextOfSaveGame.text = SaveId;
+            SaveId = PlayerName + IndexOfSaveGame;
+            PlusImage.enabled = false;
+            TextOfSaveGame.text = PlayerName;
         }
+     
         
+    }
+    public void GetLastSelected()
+    {
+        if (PlayerPrefs.GetInt("LastSelectedSaveGame") == IndexOfSaveGame)
+        {
+            if(!string.IsNullOrEmpty(PlayerName))
+            {
+                GetSelected(this);
+            }
+        }
     }
     public static void GetSelected(SaveGame saveGame)
     {
@@ -33,6 +53,7 @@ public class SaveGame : MonoBehaviour
         CurrentSaveGame = saveGame;
         MainGameManager.instance.SaveId = saveGame.SaveId;
         MainGameManager.instance.CurrentSaveGameIndex = saveGame.IndexOfSaveGame;
+        PlayerPrefs.SetInt("LastSelectedSaveGame", saveGame.IndexOfSaveGame);
 
 
     }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class MainGameManager : MonoBehaviour
 {
@@ -69,6 +71,7 @@ public class MainGameManager : MonoBehaviour
                 SelectedSaveGame.TextOfSaveGame.text = PlayerName;
                 SelectedSaveGame.SaveId = SaveId;
                 SaveGame.GetSelected(SelectedSaveGame);
+                PlayerPrefs.SetString("Save"+SelectedSaveGame.IndexOfSaveGame, PlayerName);
                 MainMenu.SetActive(true);
                 CanvasOfCreate.SetActive(false);
                 
@@ -80,6 +83,11 @@ public class MainGameManager : MonoBehaviour
             SelectedSaveGame.GetComponent<Button>().onClick.Invoke();
         }
 
+    }
+    public void DeleteAllSaveData()
+    {
+        PlayerPrefs.DeleteAll();
+        SceneManager.LoadScene(0);
     }
     public GameObject MainMenu;
     public GameObject CanvasOfCreate;
