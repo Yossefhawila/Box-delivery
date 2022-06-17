@@ -8,18 +8,17 @@ public class SaveGame : MonoBehaviour
     public Text TextOfSaveGame;
     public Image PlusImage;
     public string SaveId;
-    private string PlayerName;
+    public string PlayerName;
     public static SaveGame CurrentSaveGame;
     public Button button;
 
     private void Awake()
     {
         GetSaveData();
+        GetLastSelected();
+
     }
-    private void Start()
-    {
-        GetLastSelected();   
-    }
+
     public void GetSaveData()
     {
         PlayerName = PlayerPrefs.GetString("Save"+IndexOfSaveGame);
@@ -42,6 +41,8 @@ public class SaveGame : MonoBehaviour
             }
         }
     }
+
+
     public static void GetSelected(SaveGame saveGame)
     {
         if (CurrentSaveGame != null)
@@ -54,6 +55,7 @@ public class SaveGame : MonoBehaviour
         MainGameManager.instance.SaveId = saveGame.SaveId;
         MainGameManager.instance.CurrentSaveGameIndex = saveGame.IndexOfSaveGame;
         PlayerPrefs.SetInt("LastSelectedSaveGame", saveGame.IndexOfSaveGame);
+        MainGameManager.instance.PlayerName = saveGame.PlayerName;
 
 
     }

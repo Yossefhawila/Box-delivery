@@ -30,13 +30,19 @@ public class MainGameManager : MonoBehaviour
     }
     public void GameStartButton(Button SaveGamesButton)
     {
+        
+        CanvasOfSaveGameMenu.SetActive(true);
+        CanvasOfSaveGameMenu.SetActive(false);
+
         if (string.IsNullOrEmpty(PlayerName))
         {
+           
             SaveGamesButton.onClick.Invoke();
         }
         else
         {
-            
+            MainMenu.SetActive(false);
+            LevelsCanvas.SetActive(true);
         }
     }
 
@@ -61,21 +67,22 @@ public class MainGameManager : MonoBehaviour
         if (textOfName.text.Trim().Length > 0)
         {
             
-            PlayerName=textOfName.text;
-            
-            if (SelectedSaveGame != null)
+           this.PlayerName=textOfName.text;
+            if (string.IsNullOrEmpty(SelectedSaveGame.TextOfSaveGame.text))
             {
+                
                 SaveId = PlayerName + SelectedSaveGame.IndexOfSaveGame;
                 CurrentSaveGameIndex = SelectedSaveGame.IndexOfSaveGame;
                 SelectedSaveGame.PlusImage.enabled = false;
                 SelectedSaveGame.TextOfSaveGame.text = PlayerName;
+                SelectedSaveGame.PlayerName = PlayerName;
                 SelectedSaveGame.SaveId = SaveId;
                 SaveGame.GetSelected(SelectedSaveGame);
                 PlayerPrefs.SetString("Save"+SelectedSaveGame.IndexOfSaveGame, PlayerName);
                 MainMenu.SetActive(true);
                 CanvasOfCreate.SetActive(false);
-                
 
+                Debug.Log(PlayerName);
             }
         }
         else
@@ -89,7 +96,12 @@ public class MainGameManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(0);
     }
+    public void GameLevelLoader(int Level)
+    {
+        SceneManager.LoadScene(Level);
+    }
     public GameObject MainMenu;
+    public GameObject LevelsCanvas;
     public GameObject CanvasOfCreate;
     public GameObject CanvasOfSaveGameMenu;
     public void ShowCreateSaveGame(SaveGame saveGame)
@@ -107,4 +119,7 @@ public class MainGameManager : MonoBehaviour
         }
 
     }
+
+
+
 }
