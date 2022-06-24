@@ -1024,7 +1024,8 @@ MonoBehaviour:
   ThCar: {fileID: 9009771121140313328, guid: edee8d776e0d72d4c900b5a4e865d863, type: 3}
   MoneyText: {fileID: 1672406306}
   CarButton: {fileID: 1111171393}
-  Boxes: []
+  Boxes:
+  - {x: -24.8, y: -0.8}
   Cars: []
   audioSource: {fileID: 0}
   Click: {fileID: 8300000, guid: bba74e54a0cee534d97da43d75900c10, type: 3}

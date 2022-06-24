@@ -39,9 +39,10 @@ public class MainGameManager : MonoBehaviour
     public void ReloadLevelsMenu()
     {
         PlayerLevel  = PlayerPrefs.GetFloat(SaveId + "Level");
-        Level.GetOpenLevels(Level1);
-        DiamondF = PlayerPrefs.GetFloat(SaveId+"DiamondF");
+        DiamondF = PlayerPrefs.GetFloat(SaveId + "DiamondF");
         DiamondFText.text = GameManager.getMoneyText(DiamondF);
+        Level.GetOpenLevels(Level1);
+        
     }
     private void Awake()
     {

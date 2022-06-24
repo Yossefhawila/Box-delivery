@@ -32,6 +32,24 @@ public class Level : MonoBehaviour
                     CurrentLevel = CurrentLevel.Next;
                     continue;
                 }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                CurrentLevel.GetComponent<Button>().interactable = false;
+
+                if (CurrentLevel.Next != null)
+                {
+                    CurrentLevel = CurrentLevel.Next;
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
             }
             break;
             
