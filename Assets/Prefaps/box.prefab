@@ -353,6 +353,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   price: 10
+  amountinclick: 0.5
+  priceInclick: 0
   Holded: 0
 --- !u!61 &2885072475855345324
 BoxCollider2D:

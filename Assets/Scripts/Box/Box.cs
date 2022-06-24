@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Box : MonoBehaviour
 {
     public float price;
+    public float amountinclick=1;
+    public float priceInclick;
     [HideInInspector]
     public bool Holded;
 
@@ -15,7 +17,7 @@ public class Box : MonoBehaviour
     }
     public void SetPriceCanvas()
     {
-        transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = GameManager.getMoneyText(price + GameManager.instance.InGameMoneyPerBox )+ "$";
+        transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = GameManager.getMoneyText(price + GameManager.instance.InGameMoneyPerBox + priceInclick) + "$";
     }
     public void SELL()
     {
@@ -24,10 +26,15 @@ public class Box : MonoBehaviour
         {
             BH.HaveBox = false;
         }
-        GameManager.instance.PlayerCoins += price+GameManager.instance.InGameMoneyPerBox;
+        GameManager.instance.PlayerCoins += price+GameManager.instance.InGameMoneyPerBox+ priceInclick;
         GameManager.instance.UpdateWhatHappen();
         GameObject opjP = Instantiate(GameManager.instance.Moneyp);
         Destroy(opjP,3);
         Destroy(gameObject);
+    }
+    private void OnMouseDown()
+    {
+        priceInclick += amountinclick;
+        SetPriceCanvas();
     }
 }

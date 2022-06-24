@@ -18,10 +18,11 @@ public class BoxGen : MonoBehaviour
     
     private void Start()
     {
+        GameManager.instance.SpawnersCount+=1;
         Banel = transform.GetChild(0).GetChild(0).GetComponent<Image>();
         SecsText = Banel.GetComponentInChildren<Text>();
         StartCoroutine(GenBehave());
-        InvokeRepeating("AskAcar", 2f,5f);
+        GameManager.instance.UpdateWhatHappen();
         
     }
     private float waitTime;
@@ -66,7 +67,6 @@ public class BoxGen : MonoBehaviour
         GameManager.instance.audioSource.PlayOneShot(GameManager.instance.BoxSpawn,0.5f);
         HaveGenBox = true;
         AskAcar();
-        
         
         
     }

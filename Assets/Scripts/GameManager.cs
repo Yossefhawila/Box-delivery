@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float SecToOfGen=30;
     public float InGameSpeedOfGen=15;
     public float InGameMoneyPerBox=0;
+    public float SpawnersCount;
     public static GameManager instance;
     public GameObject Moneyp;
     [SerializeField]
@@ -92,10 +93,9 @@ public class GameManager : MonoBehaviour
             {
                 if (Car.Tasks.Count < 1)
                 {
-                    
+                    Car.TrackStorage();
                     Car.Track(Pos);
                     IsTaskDone = true;
-                   
                     break;
                 }
             }
@@ -195,7 +195,6 @@ public class GameManager : MonoBehaviour
     public float LastDiamondAmount;
     private void PlayerEndTasks()
     {
-        needsButton.onClick.Invoke();
         EndCanvas.SetActive(true);
         StartCoroutine(SetDiamondText());
 
@@ -211,8 +210,9 @@ public class GameManager : MonoBehaviour
         PlayerUi.SetActive(false);
         while (true)
         {
-            yield return new WaitForSeconds(0.1f);
+           
             cou++;
+            yield return new WaitForSeconds(0.1f / cou);
             DiamondText.text = getMoneyText(cou);
             audioSource.PlayOneShot(Ponas);
             

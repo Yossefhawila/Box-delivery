@@ -13,12 +13,8 @@ public class Cr : Controller
         }
     
         GameManager.instance.Cars.Add(this);
-        if(GameManager.instance.Boxes.Count > 0)
-        {
-            TrackCenter();
-            TrackStorage();
-            Track(GameManager.instance.Boxes[0]);
-        }
+        GoToRandomBox();
+        GameManager.instance.UpdateWhatHappen();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,7 +29,7 @@ public class Cr : Controller
                     BX.SELL();
                     HaveBox = false;
                     audioSource.PlayOneShot(GameManager.instance.CarGetAndThrowItem);
-                    TrackStorage();
+                    GoToRandomBox();
                 }
             }
         }
@@ -60,6 +56,9 @@ public class Cr : Controller
                         HaveBox = true;
                         BH.GetBox(collision.gameObject);
                         audioSource.PlayOneShot(GameManager.instance.CarGetAndThrowItem);
+                        CancelAllTasks();
+                        TrackStorage();
+                        TrackCenter();
                         TrackSell();
                     }
                 }
@@ -75,6 +74,8 @@ public class Cr : Controller
             }
         }
     }
+  
+  
     bool clicked;
     private void OnMouseDown()
     { 
