@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Box : MonoBehaviour
 {
-    [HideInInspector]
     public float price;
     [HideInInspector]
-    public bool Holded;   
- 
+    public bool Holded;
+
+    private void Start()
+    {
+        SetPriceCanvas();
+    }
+    public void SetPriceCanvas()
+    {
+        transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>().text = GameManager.getMoneyText(price + GameManager.instance.InGameMoneyPerBox )+ "$";
+    }
     public void SELL()
     {
         BoxHolder BH =transform.parent.GetComponent<BoxHolder>();

@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class MainGameManager : MonoBehaviour
 {
     public static MainGameManager instance;
+    public float PlayerLevel = 1;
+    public float DiamondF;
     public static bool IsGameSoundEnabled=false;
     public bool FirstGameOpen = false;
     private SaveGame SelectedSaveGame;
@@ -16,17 +18,50 @@ public class MainGameManager : MonoBehaviour
     public int CurrentSaveGameIndex;
     public string PlayerName;
     public string SaveId;
-
+    
+    
 
     //audiosorce
 
     public AudioClip Click;
 
     // Start is called before the first frame update
+    public void AddDiamondF(float Amount)
+    {
+        DiamondF += Amount;
+    }
+    public float DiamondFAmount()
+    {
+        return DiamondF;
+    }
+    public Text DiamondFText;
+    public Level Level1;
+    public void ReloadLevelsMenu()
+    {
+        PlayerLevel  = PlayerPrefs.GetFloat(SaveId + "Level");
+        Level.GetOpenLevels(Level1);
+        DiamondF = PlayerPrefs.GetFloat(SaveId+"DiamondF");
+        DiamondFText.text = GameManager.getMoneyText(DiamondF);
+    }
     private void Awake()
     {
         audioSource =GetComponent<AudioSource>();
+
+        if (instance != null)
+        {
+            Destroy(instance.gameObject);
+            
+        }
+        DontDestroyOnLoad(gameObject);
         instance = this;
+
+
+    }
+    public void SaveData()
+    {
+        PlayerPrefs.SetFloat(SaveId + "DiamondF", DiamondF);
+        PlayerPrefs.SetFloat(SaveId + "Level", PlayerLevel);
+
     }
     public void GameStartButton(Button SaveGamesButton)
     {
@@ -43,6 +78,7 @@ public class MainGameManager : MonoBehaviour
         {
             MainMenu.SetActive(false);
             LevelsCanvas.SetActive(true);
+            ReloadLevelsMenu();
         }
     }
 

@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public AudioClip CarGetAndThrowItem;
     public AudioClip BackGroundSound;
     public AudioClip BoxSpawn;
+    public AudioClip Ponas;
+    public AudioClip Endgame;
 
     [SerializeField ]
     private Button CancelBuyButton;
@@ -116,7 +118,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public string getMoneyText(double MOneyhere)
+    public static string getMoneyText(double MOneyhere)
     {
         string sympol = "";
 
@@ -171,10 +173,13 @@ public class GameManager : MonoBehaviour
             CarButton.interactable = false;
 
         }
+        LastDiamondAmount = 0;
         foreach (MyTask mytask in GetComponents<MyTask>())
         {
+            
             if(mytask.GetTaskStatus())
             {
+                LastDiamondAmount += mytask.DiamondAmount;
                 continue;
             }
             else
@@ -185,10 +190,45 @@ public class GameManager : MonoBehaviour
         PlayerEndTasks();
 
     }
-
+    public Button needsButton;
+    public GameObject EndCanvas;
+    public float LastDiamondAmount;
     private void PlayerEndTasks()
     {
-        Debug.Log("end");   
+        needsButton.onClick.Invoke();
+        EndCanvas.SetActive(true);
+        StartCoroutine(SetDiamondText());
+
+    }
+    public Text DiamondText;
+    int cou =0;
+    public Button CloseMenuButton;
+    public GameObject PlayerUi;
+    IEnumerator SetDiamondText()
+    {
+        audioSource.PlayOneShot(Endgame);
+        CloseMenuButton.interactable = false;
+        PlayerUi.SetActive(false);
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            cou++;
+            DiamondText.text = getMoneyText(cou);
+            audioSource.PlayOneShot(Ponas);
+            
+            if (cou >= LastDiamondAmount)
+            {
+                Time.timeScale = 0;
+                MainGameManager.instance.AddDiamondF(LastDiamondAmount);
+                if (MainGameManager.instance.PlayerLevel == SceneManager.GetActiveScene().buildIndex)
+                {
+                    MainGameManager.instance.PlayerLevel += 1;
+                    
+                }
+                MainGameManager.instance.SaveData();
+                break;
+            }
+        }
     }
 
     [SerializeField]
@@ -324,6 +364,8 @@ public class GameManager : MonoBehaviour
     private Button MoneyPerBoxButton;
     [SerializeField]
     private Text MoneyPerBoxText;
+
+    
 
     public void MoneyPerBoxMax()
     {
