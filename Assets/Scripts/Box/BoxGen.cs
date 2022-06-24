@@ -23,6 +23,7 @@ public class BoxGen : MonoBehaviour
         SecsText = Banel.GetComponentInChildren<Text>();
         StartCoroutine(GenBehave());
         GameManager.instance.UpdateWhatHappen();
+       
         
     }
     private float waitTime;

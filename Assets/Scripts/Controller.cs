@@ -88,7 +88,7 @@ public abstract class Controller : MonoBehaviour
         speedInGame = GameManager.instance.CarSpeed;
         if (Tasks.Count<1)
         {
-            if (audioSource.loop == false)
+            if (audioSource.loop == false||audioSource.clip == null)
             {
                 audioSource.PlayOneShot(GameManager.instance.CarStart);
                 audioSource.clip = CarSound;

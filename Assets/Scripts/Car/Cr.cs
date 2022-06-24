@@ -15,6 +15,7 @@ public class Cr : Controller
         GameManager.instance.Cars.Add(this);
         GoToRandomBox();
         GameManager.instance.UpdateWhatHappen();
+        
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
